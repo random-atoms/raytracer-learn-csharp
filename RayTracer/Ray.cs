@@ -21,5 +21,10 @@ namespace RayTracer
         {
             return Origin + Direction * t;
         }
+
+        Vector3 GetColor()
+        {
+            return new Vector3();
+        }
     }
 }
