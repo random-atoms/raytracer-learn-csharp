@@ -22,9 +22,14 @@ namespace RayTracer
             return Origin + Direction * t;
         }
 
-        Vector3 GetColor()
+        public Vector3 GetColor()
         {
-            return new Vector3();
+            Vector3 unitDir = Vector3.Normalize(Direction);
+            float t = 0.5f * (unitDir.Y + 1.0f);
+            Vector3 tmpUnitColor = new Vector3(1.0f);
+            Vector3 tmpOtherColor = new Vector3(0.5f,0.7f,1.0f);
+            Vector3 finalColor =  (1.0f - t) * tmpUnitColor + t * tmpOtherColor;
+            return finalColor;
         }
     }
 }

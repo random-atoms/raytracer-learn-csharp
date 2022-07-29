@@ -4,10 +4,10 @@ using RayTracer;
 using System.Numerics;
 
 // Image sizes - eventually should come from user
-const float aspectRatio = 16.0f / 9.0f;
-const int imageWidth = 440;
-const int imageHeight = (int)(imageWidth / aspectRatio);
 const float pixelMax = 255.999f;
+const float aspectRatio = 16.0f / 9.0f;
+const int imageWidth = 400;
+const int imageHeight = (int)(imageWidth / aspectRatio);
 
 // Define the camera
 float viewportHeight = 2.0f;
@@ -34,22 +34,16 @@ for (int j = imageHeight - 1; j >= 0; --j)
     Console.Error.Write($"\rScanlines remaining: {j}");
     for (int i = 0; i < imageWidth; ++i)
     {
-        float r = (float)i / (imageWidth - 1);
-        float g = (float)j / (imageHeight - 1);
-        float b = 0.25f;
+        float u = (float)i / (imageWidth - 1);
+        float v = (float)j / (imageHeight - 1);
 
-        Vector3 pixelColor = new Vector3(pixelMax * r, pixelMax * g, pixelMax * b);
+        Ray ray = new Ray(origin, lower_left_corner + u * horizontal + v * vertical - origin);
+
+        // Multiply ray color by pixelMax to get pixelColor
+        Vector3 pixelColor = pixelMax * ray.GetColor();
+
 
         Console.WriteLine($"{(int)pixelColor.X} {(int)pixelColor.Y} {(int)pixelColor.Z}");
     }
 }
 Console.Error.WriteLine("\nDone");
-
-Vector3 orig = new Vector3(1.0f, 1.0f, 1.0f);
-Vector3 dirc = new Vector3(2.0f, 4.0f, 8.0f);
-
-Ray ray = new Ray(orig, dirc);
-Vector3 neworig = ray.At(4.0f);
-
-System.Console.WriteLine($"{ray.Origin} {ray.Direction}");
-System.Console.WriteLine($"{neworig}");
