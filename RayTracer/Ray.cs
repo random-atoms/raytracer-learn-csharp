@@ -24,6 +24,10 @@ namespace RayTracer
 
         public Vector3 GetColor()
         {
+            if (ObjectHits.SphereHit())
+            {
+                return new Vector3(1, 0, 0);
+            }
             Vector3 unitDir = Vector3.Normalize(Direction);
             float t = 0.5f * (unitDir.Y + 1.0f);
             Vector3 tmpUnitColor = new Vector3(1.0f);
