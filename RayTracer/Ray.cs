@@ -24,15 +24,16 @@ namespace RayTracer
 
         public Vector3 GetColor()
         {
-            if (ObjectHits.SphereHit())
+            var t = ObjectHits.SphereHit(new Vector3(0, 0, -1), 0.5f, this);
+            if (t > 0.0f)
             {
-                return new Vector3(1, 0, 0);
-            }
+                Vector3 N = At(t) - new Vector3(0, 0, -1);
+                return 0.5f * new Vector3(N.X + 1.0f, N.Y + 1.0f, N.Z + 1.0f);
+            }    
+
             Vector3 unitDir = Vector3.Normalize(Direction);
-            float t = 0.5f * (unitDir.Y + 1.0f);
-            Vector3 tmpUnitColor = new Vector3(1.0f);
-            Vector3 tmpOtherColor = new Vector3(0.5f,0.7f,1.0f);
-            Vector3 finalColor =  (1.0f - t) * tmpUnitColor + t * tmpOtherColor;
+            t = 0.5f * (unitDir.Y + 1.0f);
+            Vector3 finalColor =  (1.0f - t) * new Vector3(1.0f) + t * new Vector3(0.5f, 0.7f, 1.0f);
             return finalColor;
         }
     }
